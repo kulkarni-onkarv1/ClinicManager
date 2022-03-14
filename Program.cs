@@ -104,7 +104,7 @@ class Program
                     if (resultantPatientID == null)
                     {
                         Console.WriteLine("No Patient Found For PatientID:{0}", choice);
-                        Console.WriteLine("If You Are Not Able To Find PatientID, Then Search Patient By Its Name From 2nd Menu To Find PatientID");
+                        Console.WriteLine("If You Are Not Able To Find PatientID, Then Search Patient By Its Name From 9th Menu To Find PatientID");
                     }
                     else
                     {
@@ -204,8 +204,8 @@ class Program
                     var resultantPatientID = patientDataManagement.GetByIdAsync(IdChoice).Result;
                     if (resultantPatientID == null)
                     {
-                        Console.WriteLine("No Patient Found For PatientID:{0}", choice);
-                        Console.WriteLine("If You Are Not Able To Find PatientID, Then Search Patient By Its Name From 2nd Menu To Find PatientID");
+                        Console.WriteLine("No Patient Found For PatientID:{0}", IdChoice);
+                        Console.WriteLine("If You Are Not Able To Find PatientID, Then Search Patient By Its Name From 9th Menu To Find PatientID");
                     }
                     else
                     {
@@ -227,7 +227,7 @@ class Program
                     if (resultantPatientID == null)
                     {
                         Console.WriteLine("No Patient Found For PatientID:{0}", choice);
-                        Console.WriteLine("If You Are Not Able To Find PatientID, Then Search Patient By Its Name From 2nd Menu To Find PatientID");
+                        Console.WriteLine("If You Are Not Able To Find PatientID, Then Search Patient By Its Name From 9th Menu To Find PatientID");
                     }
                     else
                     {
