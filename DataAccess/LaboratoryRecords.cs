@@ -21,7 +21,7 @@ namespace CS_DoctorVolumeMiniProj.DataAccess
             {
                 try
                 {
-                    Console.WriteLine("Enter Test Reference Number");
+                    Console.WriteLine("Enter Test Reference Number:(GLU23D,RANDG12D,W13T)");
                     TestRN = Console.ReadLine();
 
                     Console.WriteLine("Creating new Record");
@@ -44,9 +44,13 @@ namespace CS_DoctorVolumeMiniProj.DataAccess
                         Console.WriteLine("Insertion Failed");
                     }
                 }
-                catch (Exception ex)
+                catch (SqlException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Something Went Wrong!!!Check Entries Once!!!");
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Something Went Wrong!!!Check Entries Once!!!");
                 }
             } while (Choice == "yes");
            

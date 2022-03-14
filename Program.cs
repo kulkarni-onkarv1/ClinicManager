@@ -4,6 +4,7 @@ using CS_DoctorVolumeMiniProj.DataAccess;
 using CS_DoctorVolumeMiniProj.Models2;
 using CS_DoctorVolumeMiniProj.DataAccess.NewFolder; 
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 class Program
 {
@@ -24,10 +25,13 @@ class Program
     static string Discription=String.Empty;
     static string Medicine=String.Empty;
     static string Date=String.Empty;
+    static bool IsNotValidPatientName = true;
+    static bool IsNotValidPatientWeight = true;
     //static int PatientID = 0;
 
     public static void Main()
     {
+        Console.WriteLine("Greetings!Welcome On The Board!");
         do
         {
             try
@@ -46,15 +50,29 @@ class Program
                 DailyCollectionReport dailyCollectionReport= new DailyCollectionReport();
                 if (choice == 1)
                 {
-                    //Console.WriteLine("Enter Your Reg No Regstered With Administration");
-
                     Console.WriteLine("Enter Patient Name");
-                    PatientName = Console.ReadLine();
+                    string strRegexx4 = "^[a-zA-Z\\s]+$";
+                    String validationForName=String.Empty;
+                    do {
+                        IsNotValidPatientName = true;
+                        validationForName = Console.ReadLine();
+                        Regex re = new Regex(strRegexx4);
+                        if (re.IsMatch(validationForName))
+                        {
+                            IsNotValidPatientName = false;
+                            PatientName = validationForName;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Patient Name Cannot Have Number and special Characters");
+                            Console.WriteLine("Enter Patient Name Again");
+                        }
+                    }while (IsNotValidPatientName);
+                    
                     Console.WriteLine("Enter Patient Address(At Least Village/Town/City");
                     PatientAddress = Console.ReadLine();
                     Console.WriteLine("Enter Patient's ID Card Number:");
                     PatientIdcardNumber = Console.ReadLine();
-                    Console.WriteLine("Enter For Employee DeptNo");
                     Console.WriteLine("Creating new Record");
                     var ODpatientNew = new OutDoorPatient()
                     {
@@ -73,7 +91,8 @@ class Program
                     }
                     else
                     {
-
+                        var patientAutoIncrID = result.PatientId;
+                        Console.WriteLine($"Patient's Auto Generated ID: {patientAutoIncrID}. Note This Down For Further Insertions");
                     }
                 }
                 else if (choice == 4)
@@ -108,9 +127,21 @@ class Program
                         HDL = Console.ReadLine();
                         Console.WriteLine("Enter Patient's Measured LDL");
                         LDL = Console.ReadLine();
-                        Console.WriteLine("Enter Patient's Measured Weight In KiloGram");
-                        Weight=decimal.Parse(Console.ReadLine());
-                        Console.WriteLine("Has Patient Second Time In The Interval Of Past 15 Days From Last Treated Day?");
+                        do
+                        {
+                            IsNotValidPatientWeight = true;
+                            Console.WriteLine("Enter Patient's Measured Weight In KiloGram");
+                            Weight = decimal.Parse(Console.ReadLine());
+                            if(Weight <= 0)
+                            {
+                                Console.WriteLine("Oh Oh! Weight Cannot Be Zero Or Less Than Zero");
+                            }
+                            else
+                            {
+                                IsNotValidPatientWeight = false;
+                            }
+                        } while (IsNotValidPatientWeight);
+                        Console.WriteLine("Has Patient Come Second Time In The Interval Of Past 15 Days From Last Treated Day?");
                         Console.WriteLine("If Yes Then Enter Yes.Else Enter Enter Any Key To Proceed Further");
                         String VisitCheck=Console.ReadLine().ToLower();
                         if(VisitCheck == "yes")
@@ -137,7 +168,7 @@ class Program
                         var patientDiesess = patientDieasesRecord.patientDieasesRecordInsertionAsync(patientMedicalDiagonisis);
                         if (patientDiesess.Result != null)
                         {
-                            Console.WriteLine("Record Inserted Successfully");
+                            Console.WriteLine("Record Inserted Successfully");                           
                         }
                         else
                         {
